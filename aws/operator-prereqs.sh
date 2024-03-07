@@ -64,7 +64,7 @@ chmod +x /usr/local/bin/eksctl
 #AZ CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login
-az account set --subscription nycpivot
+az account set --subscription "Original Subscription"
 
 #KUBECTL
 sudo snap install kubectl --classic --channel=1.25/stable
