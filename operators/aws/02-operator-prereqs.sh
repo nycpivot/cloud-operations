@@ -64,7 +64,15 @@ chmod +x /usr/local/bin/eksctl
 #AZ CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login
-az account set --subscription "Original Subscription"
+az account set --subscription thejameshome
+
+aws_access_key_id=$(az keyvault secret show --name aws-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
+aws_secret_access_key=$(az keyvault secret show --name aws-secret-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
+
+aws configure set aws_access_key_id $aws_access_key_id
+aws configure set aws_secret_access_key $aws_secret_access_key
+aws configure set default.region $aws_region_code
+
 
 #KUBECTL
 sudo snap install kubectl --classic --channel=1.25/stable
