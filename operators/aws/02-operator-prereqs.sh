@@ -71,7 +71,7 @@ aws_secret_access_key=$(az keyvault secret show --name aws-secret-access-key --s
 
 aws configure set aws_access_key_id $aws_access_key_id
 aws configure set aws_secret_access_key $aws_secret_access_key
-aws configure set default.region $aws_region_code
+aws configure set default.region $AWS_REGION_CODE
 
 
 #KUBECTL
