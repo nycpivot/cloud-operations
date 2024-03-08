@@ -1,17 +1,17 @@
 #!/bin/bash
 
-read -p "Stack Name (cloud-operator-stack): " stack_name
-read -p "Operator Name (cloud-operator): " operator_name
+read -p "Stack Name (operator-stack): " stack_name
+read -p "Operator Name (aws-operator): " operator_name
 read -p "AWS Region Code (us-east-1): " aws_region_code
 
 if [[ -z $stack_name ]]
 then
-	stack_name=cloud-operator-stack
+	stack_name=operator-stack
 fi
 
 if [[ -z $operator_name ]]
 then
-	operator_name=cloud-operator
+	operator_name=aws-operator
 fi
 
 if [[ -z $aws_region_code ]]
@@ -31,24 +31,24 @@ aws cloudformation create-stack \
 	--region ${aws_region_code} \
 	--parameters ParameterKey=OperatorName,ParameterValue=${operator_name} \
 	--parameters ParameterKey=VpcId,ParameterValue=${vpc_id} \
-	--template-body file://operator/config/cloud-operator-stack.yaml
+	--template-body file://operators/aws/config/operator-stack.yaml
 
 aws cloudformation wait stack-create-complete --stack-name ${stack_name} --region ${aws_region_code}
 
-key_id=$(aws ec2 describe-key-pairs --filters Name=key-name,Values=cloud-operator-keypair --query KeyPairs[*].KeyPairId --output text --region ${aws_region_code})
+key_id=$(aws ec2 describe-key-pairs --filters Name=key-name,Values=operator-keypair --query KeyPairs[*].KeyPairId --output text --region ${aws_region_code})
 
-if [ ! -d "operator/keys" ]
+if [ ! -d "~/cloud-operations/operators/aws/keys" ]
 then
-	mkdir operator/keys
+	mkdir ~/cloud-operations/operators/aws/keys
 fi
 
-if test -f operator/keys/cloud-operator-keypair-${aws_region_code}.pem; then
-	rm operator/keys/cloud-operator-keypair-${aws_region_code}.pem
+if test -f ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem; then
+	rm ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
 fi
 
 aws ssm get-parameter --name " /ec2/keypair/${key_id}" --with-decryption \
 	--query Parameter.Value --region ${aws_region_code} \
-	--output text > operator/keys/cloud-operator-keypair-${aws_region_code}.pem
+	--output text > ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
 
 echo
 

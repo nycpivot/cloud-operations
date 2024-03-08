@@ -14,19 +14,19 @@ Parameters:
     Type: String
   OperatorName:
     Type: String
-    Default: cloud-operator
+    Default: aws-operator
     AllowedValues:
-      - cloud-operator
-      - cloud-operator-1
-      - cloud-operator-2
-      - cloud-operator-3
-      - cloud-operator-4
-      - cloud-operator-5
+      - aws-operator
+      - aws-operator-1
+      - aws-operator-2
+      - aws-operator-3
+      - aws-operator-4
+      - aws-operator-5
 Resources:
   OperatorKeyPair:
     Type: 'AWS::EC2::KeyPair'
     Properties:
-      KeyName: cloud-operator-keypair
+      KeyName: aws-operator-keypair
   OperatorSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
