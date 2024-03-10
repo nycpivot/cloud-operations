@@ -74,7 +74,7 @@ aws_region_code=$(cat metadata | jq -r .region)
 
 aws configure set aws_access_key_id $aws_access_key_id
 aws configure set aws_secret_access_key $aws_secret_access_key
-aws configure set default.region $AWS_REGION_CODE
+aws configure set default.region $aws_region_code
 
 
 #KUBECTL
