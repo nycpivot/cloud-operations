@@ -1,12 +1,12 @@
 #!/bin/bash
 
-read -p "Stack Name (operator-stack): " stack_name
+read -p "Stack Name (aws-operator-stack): " stack_name
 read -p "Operator Name (aws-operator): " operator_name
 read -p "AWS Region Code (us-east-1): " aws_region_code
 
 if [[ -z $stack_name ]]
 then
-	stack_name=operator-stack
+	stack_name=aws-operator-stack
 fi
 
 if [[ -z $operator_name ]]
@@ -38,20 +38,20 @@ aws cloudformation create-stack \
 
 aws cloudformation wait stack-create-complete --stack-name ${stack_name} --region ${aws_region_code}
 
-key_id=$(aws ec2 describe-key-pairs --filters Name=key-name,Values=operator-keypair --query KeyPairs[*].KeyPairId --output text --region ${aws_region_code})
+key_id=$(aws ec2 describe-key-pairs --filters Name=key-name,Values=aws-operator-keypair --query KeyPairs[*].KeyPairId --output text --region ${aws_region_code})
 
-if [ ! -d "~/cloud-operations/operators/aws/keys" ]
+if [ ! -d "operators/aws/keys" ]
 then
-	mkdir ~/cloud-operations/operators/aws/keys
+	mkdir operators/aws/keys
 fi
 
-if test -f ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem; then
-	rm ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
+if test -f operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem; then
+	rm operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
 fi
 
 aws ssm get-parameter --name " /ec2/keypair/${key_id}" --with-decryption \
 	--query Parameter.Value --region ${aws_region_code} \
-	--output text > ~/cloud-operations/operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
+	--output text > operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
 
 echo
 
