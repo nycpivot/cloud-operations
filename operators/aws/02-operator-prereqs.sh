@@ -66,8 +66,11 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login
 az account set --subscription thejameshome
 
+wget http://169.254.169.254/latest/dynamic/instance-identity/document -O metadata
+
 aws_access_key_id=$(az keyvault secret show --name aws-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
 aws_secret_access_key=$(az keyvault secret show --name aws-secret-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
+aws_region_code=$(cat metadata | jq -r .region)
 
 aws configure set aws_access_key_id $aws_access_key_id
 aws configure set aws_secret_access_key $aws_secret_access_key

@@ -19,9 +19,6 @@ then
 	aws_region_code=us-east-1
 fi
 
-echo "export AWS_REGION_CODE=$aws_region_code" >> .bashrc
-source .bashrc
-
 vpc_id=$(aws ec2 describe-vpcs --region ${aws_region_code} --filter "Name=isDefault,Values=true" --query "Vpcs[].VpcId" --output text)
 
 if [[ -z $vpc_id ]]
