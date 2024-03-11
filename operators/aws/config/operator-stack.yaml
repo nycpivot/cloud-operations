@@ -47,7 +47,7 @@ Resources:
         - Images
         - !Ref AWS::Region
         - Id
-      InstanceType: "t3.large"
+      InstanceType: "t3.medium"
       KeyName: !Ref OperatorKeyPair
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
