@@ -267,4 +267,5 @@ keys/
 secrets/
 certs/
 
-tanzu-operator.sh
+aws-operator.sh
+azure-operator.sh
