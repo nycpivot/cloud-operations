@@ -9,7 +9,8 @@ fi
 
 if [[ $aws_region_code = "us-east-1" ]]
 then
-    ssh ubuntu@ec2-3-90-178-104.compute-1.amazonaws.com -i operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem # -L 8001:localhost:8001 -L 8080:localhost:8080 -L 9090:localhost:9090 -L 15672:localhost:15672
+    ssh ubuntu@ec2-3-90-178-104.compute-1.amazonaws.com -i operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem \
+        # -L 8001:localhost:8001 -L 8080:localhost:8080 -L 9090:localhost:9090 -L 15672:localhost:15672
 elif [[ $aws_region_code = "us-east-2" ]]
 then
     ssh ubuntu@ec2-3-22-118-73.us-east-2.compute.amazonaws.com -i operators/aws/keys/aws-operator-keypair-${aws_region_code}.pem
