@@ -97,7 +97,7 @@ wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.
 sudo dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 
-sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0
 
 #DEMO-MAGIC
 wget https://raw.githubusercontent.com/paxtonhare/demo-magic/master/demo-magic.sh
