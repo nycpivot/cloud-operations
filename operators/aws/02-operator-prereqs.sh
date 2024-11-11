@@ -20,7 +20,9 @@ sudo apt install python-is-python3
 alias python=python3
 
 yes | sudo apt install python3-pip
-pip3 install yq
+
+#the following line throws an error
+#pip3 install yq
 
 wget https://releases.hashicorp.com/terraform/0.13.0/terraform_0.13.0_linux_amd64.zip
 unzip terraform_0.13.0_linux_amd64.zip
@@ -28,6 +30,11 @@ sudo mv terraform /usr/local/bin
 rm terraform_0.13.0_linux_amd64.zip
 
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+
+#KUBECTL
+sudo snap install kubectl --classic --channel=1.29/stable
+kubectl version
 
 #KREW
 (
@@ -42,8 +49,11 @@ wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 echo "export PATH='${KREW_ROOT:-$HOME/.krew}/bin:$PATH'" >> .bashrc
 
+source .bashrc
+
 kubectl krew install tree
 kubectl krew install lineage
+
 
 #AWS CLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -64,13 +74,13 @@ chmod +x /usr/local/bin/eksctl
 #AZ CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 az login
-az account set --subscription thejameshome
+#az account set --subscription thejameshome
 
-wget http://169.254.169.254/latest/dynamic/instance-identity/document -O metadata
+#wget http://169.254.169.254/latest/dynamic/instance-identity/document -O metadata
 
 aws_access_key_id=$(az keyvault secret show --name aws-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
 aws_secret_access_key=$(az keyvault secret show --name aws-secret-access-key --subscription thejameshome --vault-name cloud-operations-vault --query value --output tsv)
-aws_region_code=$(cat metadata | jq -r .region)
+aws_region_code=us-east-1 #$(cat metadata | jq -r .region)
 
 aws configure set aws_access_key_id $aws_access_key_id
 aws configure set aws_secret_access_key $aws_secret_access_key
